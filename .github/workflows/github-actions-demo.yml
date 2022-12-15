@@ -1,0 +1,12 @@
+name: Github actions to Dockerhub
+run-name: ${{ github.actor }} is testing out GitHub Actions to upload Docker Image🚀
+on: [push]
+jobs:
+  Build-and-push-image:
+    runs-on: ubuntu-latest
+    steps:
+    - uses : actions/checkout@v3
+    - name : build and tag image
+      run: docker build Dockerfile . --tag Sinwrecker/test-github-action:testv1   
+    - name : push to dockerhub
+      run: docker login -u ${{secrets.DOCKERHUB_USERNAME}} -p ${{secrets.DOCKERHUB_SECRET}} && docker push Sinwrecker/test-github-action:testv1
